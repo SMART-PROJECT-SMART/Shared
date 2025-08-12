@@ -24,19 +24,13 @@ namespace Shared.Services
 
         public static IServiceCollection AddIcdDirectoryServices(this IServiceCollection services)
         {
-            services.AddSingleton<IICDDirectory>(provider =>
-            {
-                var options = provider.GetRequiredService<IOptions<ICDSettings>>();
-                return ICDDirectory.ICDDirectory.GetInstance(options);
-            });
+            services.AddSingleton<IICDDirectory>(_ => ICDDirectory.ICDDirectory.GetInstance());
             return services;
         }
 
-        public static IServiceCollection AddSharedServices(this IServiceCollection services, IConfiguration config)
+        public static IServiceCollection AddSharedServices(this IServiceCollection services)
         {
-            return services
-                .AddAppConfiguration(config)
-                .AddIcdDirectoryServices();
+            return services.AddIcdDirectoryServices();
         }
     }
 }

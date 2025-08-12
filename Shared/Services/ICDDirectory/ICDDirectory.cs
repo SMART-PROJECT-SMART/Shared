@@ -1,7 +1,6 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Shared.Common;
-using Shared.Configuration;
 using Shared.Models.ICDModels;
 
 namespace Shared.Services.ICDDirectory
@@ -11,21 +10,26 @@ namespace Shared.Services.ICDDirectory
         private readonly List<ICD> _icds = new List<ICD>();
         private readonly string _directoryPath;
         private static ICDDirectory? _instance;
-        private static readonly object _lock = new object();
 
-        private ICDDirectory(IOptions<ICDSettings> opts)
+        private static readonly string DEFAULT_ICD_PATH = @"C:\Users\jonat\Desktop\IAF\projects\SMART\Shared\Shared\Files\ICD\";
+
+        private ICDDirectory(string directoryPath)
         {
-            _directoryPath = !string.IsNullOrWhiteSpace(opts.Value.ICDFilePath)
-                ? opts.Value.ICDFilePath
-                : throw new DirectoryNotFoundException();
+            _directoryPath = directoryPath;
         }
 
-        public static ICDDirectory GetInstance(IOptions<ICDSettings> opts)
+        public static ICDDirectory GetInstance()
         {
-            if (_instance is not (null and null)) return _instance;
-            _instance = new ICDDirectory(opts);
-                _instance.LoadAllICDs();
-                return _instance;
+            if (_instance != null) return _instance;
+
+            if (!Directory.Exists(DEFAULT_ICD_PATH))
+            {
+                throw new DirectoryNotFoundException($"ICD directory does not exist: {DEFAULT_ICD_PATH}");
+            }
+
+            _instance = new ICDDirectory(DEFAULT_ICD_PATH);
+            _instance.LoadAllICDs();
+            return _instance;
         }
 
         public void LoadAllICDs()
@@ -37,6 +41,7 @@ namespace Shared.Services.ICDDirectory
                 SharedConstants.Config.JSON_SEARCH_PATTERN,
                 SearchOption.TopDirectoryOnly
             );
+
             foreach (var filePath in jsonFiles)
             {
                 LoadICD(filePath);
@@ -53,7 +58,7 @@ namespace Shared.Services.ICDDirectory
 
         public List<ICD> GetAllICDs()
         {
-            return _icds;
+            return _icds.ToList();
         }
     }
 }
