@@ -6,20 +6,32 @@ using Shared.Models.ICDModels;
 
 namespace Shared.Services.ICDDirectory
 {
-    public class ICDDirectory : IICDDirectory
+    public sealed class ICDDirectory : IICDDirectory
     {
         private readonly List<ICD> _icds = new List<ICD>();
         private readonly string _directoryPath;
+        private static ICDDirectory? _instance;
+        private static readonly object _lock = new object();
 
-        public ICDDirectory(IOptions<ICDSettings> opts)
+        private ICDDirectory(IOptions<ICDSettings> opts)
         {
             _directoryPath = !string.IsNullOrWhiteSpace(opts.Value.ICDFilePath)
                 ? opts.Value.ICDFilePath
                 : throw new DirectoryNotFoundException();
         }
 
+        public static ICDDirectory GetInstance(IOptions<ICDSettings> opts)
+        {
+            if (_instance is not (null and null)) return _instance;
+            _instance = new ICDDirectory(opts);
+                _instance.LoadAllICDs();
+                return _instance;
+        }
+
         public void LoadAllICDs()
         {
+            if (_icds.Count > 0) return;
+
             var jsonFiles = Directory.GetFiles(
                 _directoryPath,
                 SharedConstants.Config.JSON_SEARCH_PATTERN,

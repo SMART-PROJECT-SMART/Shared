@@ -1,4 +1,4 @@
-﻿
+﻿using Microsoft.Extensions.Options;
 using Shared.Common;
 using Shared.Configuration;
 using Shared.Services.ICDDirectory;
@@ -24,8 +24,19 @@ namespace Shared.Services
 
         public static IServiceCollection AddIcdDirectoryServices(this IServiceCollection services)
         {
-            services.AddSingleton<IICDDirectory, ICDDirectory.ICDDirectory>();
+            services.AddSingleton<IICDDirectory>(provider =>
+            {
+                var options = provider.GetRequiredService<IOptions<ICDSettings>>();
+                return ICDDirectory.ICDDirectory.GetInstance(options);
+            });
             return services;
+        }
+
+        public static IServiceCollection AddSharedServices(this IServiceCollection services, IConfiguration config)
+        {
+            return services
+                .AddAppConfiguration(config)
+                .AddIcdDirectoryServices();
         }
     }
 }
