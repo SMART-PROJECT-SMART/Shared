@@ -32,6 +32,12 @@ namespace Shared.Services.ICDsDirectory
             }
         }
 
+        public ICD GetPortsICD(int portNumber)
+        {
+            int index = (portNumber - SharedConstants.Ports.BASE_PORT) % _icds.Count;
+            return _icds[index];
+        }
+
         private void LoadICD(string fullFilePath)
         {
             var fileJson = File.ReadAllText(fullFilePath);

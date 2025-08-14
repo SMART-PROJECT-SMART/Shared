@@ -7,5 +7,10 @@
             public const string ICD_DIRECTORY = "ICD";
             public const string JSON_SEARCH_PATTERN = "*.json";
         }
+
+        public static class Ports
+        {
+            public const int BASE_PORT = 8000;
+        }
     }
 }
