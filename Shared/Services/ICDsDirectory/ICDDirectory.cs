@@ -1,47 +1,31 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Shared.Common;
+using Shared.Configuration;
 using Shared.Models.ICDModels;
 
-namespace Shared.Services.ICDDirectory
+namespace Shared.Services.ICDsDirectory
 {
-    public sealed class ICDDirectory : IICDDirectory
+    public class ICDDirectory : IICDDirectory
     {
         private readonly List<ICD> _icds = new List<ICD>();
         private readonly string _directoryPath;
-        private static ICDDirectory? _instance;
 
-        private static readonly string DEFAULT_ICD_PATH = @"C:\Users\jonat\Desktop\IAF\projects\SMART\Shared\Shared\Files\ICD\";
-
-        private ICDDirectory(string directoryPath)
+        public ICDDirectory(IOptions<ICDSettings> opts)
         {
-            _directoryPath = directoryPath;
-        }
-
-        public static ICDDirectory GetInstance()
-        {
-            if (_instance != null) return _instance;
-
-            if (!Directory.Exists(DEFAULT_ICD_PATH))
-            {
-                throw new DirectoryNotFoundException($"ICD directory does not exist: {DEFAULT_ICD_PATH}");
-            }
-
-            _instance = new ICDDirectory(DEFAULT_ICD_PATH);
-            _instance.LoadAllICDs();
-            return _instance;
+            _directoryPath = !string.IsNullOrWhiteSpace(opts.Value.ICDFilePath)
+                ? opts.Value.ICDFilePath
+                : throw new DirectoryNotFoundException();
+            LoadAllICDs();
         }
 
         public void LoadAllICDs()
         {
-            if (_icds.Count > 0) return;
-
             var jsonFiles = Directory.GetFiles(
                 _directoryPath,
                 SharedConstants.Config.JSON_SEARCH_PATTERN,
                 SearchOption.TopDirectoryOnly
             );
-
             foreach (var filePath in jsonFiles)
             {
                 LoadICD(filePath);
@@ -58,7 +42,7 @@ namespace Shared.Services.ICDDirectory
 
         public List<ICD> GetAllICDs()
         {
-            return _icds.ToList();
+            return _icds;
         }
     }
 }
