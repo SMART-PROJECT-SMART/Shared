@@ -6,6 +6,5 @@ namespace Shared.Services.ICDsDirectory
     {
         public List<ICD> GetAllICDs();
         public void LoadAllICDs();
-        public ICD GetPortsICD(int portNumber);
     }
 }
