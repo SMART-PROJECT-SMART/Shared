@@ -7,9 +7,16 @@ namespace Shared.Models.ICDModels
     {
         [JsonProperty]
         public List<ICDItem> Document { get; set; } = new List<ICDItem>();
+        public string FileName { get; set; }
+
 
         public ICD() { }
 
+        public ICD(List<ICDItem> document,string fileName)
+        {
+            Document = document;
+            FileName = fileName;
+        }
         public ICD(List<ICDItem> document)
         {
             Document = document;

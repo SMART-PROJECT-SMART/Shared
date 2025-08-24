@@ -37,7 +37,10 @@ namespace Shared.Services.ICDsDirectory
         {
             var fileJson = File.ReadAllText(fullFilePath);
             var icdFields = JsonConvert.DeserializeObject<List<ICDItem>>(fileJson);
-            var icd = new ICD(icdFields);
+
+            var fileName = Path.GetFileName(fullFilePath);
+            var icd = new ICD(icdFields, fileName);
+
             _icds.Add(icd);
         }
 
