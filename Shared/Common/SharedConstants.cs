@@ -6,6 +6,7 @@
         {
             public const string ICD_DIRECTORY = "ICD";
             public const string JSON_SEARCH_PATTERN = "*.json";
+            public const string ICD_TYPE_PATTERN = @"_(\w+)\.json$";
         }
 
         public static class Ports
