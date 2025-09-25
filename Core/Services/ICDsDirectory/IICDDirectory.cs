@@ -6,5 +6,6 @@ namespace Core.Services.ICDsDirectory
     {
         public List<ICD> GetAllICDs();
         public void LoadAllICDs();
+        public int GetICDCount();
     }
 }

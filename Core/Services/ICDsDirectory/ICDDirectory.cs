@@ -10,6 +10,7 @@ namespace Core.Services.ICDsDirectory
     {
         private readonly List<ICD> _icds = new List<ICD>();
         private readonly string _directoryPath;
+        private int _nextId = 1;
 
         public ICDDirectory(IOptions<ICDSettings> opts)
         {
@@ -39,7 +40,7 @@ namespace Core.Services.ICDsDirectory
             var icdFields = JsonConvert.DeserializeObject<List<ICDItem>>(fileJson);
 
             var fileName = Path.GetFileName(fullFilePath);
-            var icd = new ICD(icdFields, fileName);
+            var icd = new ICD(icdFields, fileName, _nextId++);
 
             _icds.Add(icd);
         }
@@ -47,6 +48,11 @@ namespace Core.Services.ICDsDirectory
         public List<ICD> GetAllICDs()
         {
             return _icds;
+        }
+
+        public int GetICDCount()
+        {
+            return _icds.Count;
         }
     }
 }

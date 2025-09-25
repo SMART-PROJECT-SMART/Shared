@@ -12,14 +12,16 @@ namespace Core.Models.ICDModels
         public List<ICDItem> Document { get; set; } = new List<ICDItem>();
         public string FileName { get; set; }
         public CommunicationDataType DataType { get; set; }
+        public int Id { get; set; }
 
         public ICD() { }
 
-        public ICD(List<ICDItem> document, string fileName)
+        public ICD(List<ICDItem> document, string fileName, int id)
         {
             Document = document;
             FileName = fileName;
             DataType = ParseDataTypeFromFileName(fileName);
+            Id = id;
         }
         public ICD(List<ICDItem> document)
         {
