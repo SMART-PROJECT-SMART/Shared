@@ -1,4 +1,4 @@
-namespace Shared.Common.Enums
+namespace Core.Common.Enums
 {
     public enum CommunicationDataType
     {

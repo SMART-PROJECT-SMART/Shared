@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using Newtonsoft.Json;
-using Shared.Common.Enums;
 using System.Text.RegularExpressions;
-using Shared.Common;
+using Core.Common;
+using Core.Common.Enums;
 
-namespace Shared.Models.ICDModels
+namespace Core.Models.ICDModels
 {
     public class ICD : IEnumerable<ICDItem>
     {

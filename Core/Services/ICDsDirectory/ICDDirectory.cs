@@ -1,10 +1,10 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Core.Common;
+using Core.Configuration;
+using Core.Models.ICDModels;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using Shared.Common;
-using Shared.Configuration;
-using Shared.Models.ICDModels;
 
-namespace Shared.Services.ICDsDirectory
+namespace Core.Services.ICDsDirectory
 {
     public class ICDDirectory : IICDDirectory
     {

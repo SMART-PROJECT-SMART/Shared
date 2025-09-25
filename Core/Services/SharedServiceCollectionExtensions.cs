@@ -1,14 +1,14 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Core.Services.ICDsDirectory;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Shared.Configuration;
-using Shared.Services.ICDsDirectory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shared.Services
+namespace Core.Services
 {
     public static class SharedServiceCollectionExtensions
     {

@@ -1,6 +1,6 @@
-﻿using Shared.Common.Enums;
+﻿using Core.Common.Enums;
 
-namespace Shared.Models.ICDModels;
+namespace Core.Models.ICDModels;
 
 public class ICDItem
 {

@@ -1,6 +1,6 @@
-﻿using Shared.Models.ICDModels;
+﻿using Core.Models.ICDModels;
 
-namespace Shared.Services.ICDsDirectory
+namespace Core.Services.ICDsDirectory
 {
     public interface IICDDirectory
     {

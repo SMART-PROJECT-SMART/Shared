@@ -1,4 +1,4 @@
-﻿namespace Shared.Common
+﻿namespace Core.Common
 {
     public static class SharedConstants
     {

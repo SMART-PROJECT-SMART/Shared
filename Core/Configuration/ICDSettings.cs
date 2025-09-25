@@ -1,4 +1,4 @@
-﻿namespace Shared.Configuration
+﻿namespace Core.Configuration
 {
     public class ICDSettings
     {
