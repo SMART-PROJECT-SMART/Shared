@@ -1,7 +1,7 @@
 ﻿using Core.Services.ICDsDirectory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Shared.Configuration;
+using Core.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
