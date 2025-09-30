@@ -10,7 +10,7 @@ namespace Core.Services.ICDsDirectory
     {
         private readonly List<ICD> _icds = new List<ICD>();
         private readonly string _directoryPath;
-        private int _nextId = 1;
+        private int _nextId = 0;
 
         public ICDDirectory(IOptions<ICDSettings> opts)
         {
